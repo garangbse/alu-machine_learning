@@ -14,37 +14,33 @@ def convolve_grayscale_same(images, kernel):
     Args:
         images (numpy.ndarray): Array of shape (m, h, w) containing
             grayscale images.
-        kernel (numpy.ndarray): Array of shape (kh, kw) containing
-            the convolution kernel.
+        kernel (numpy.ndarray): Array of shape (kh, kw) containing the
+            convolution kernel.
 
     Returns:
-        numpy.ndarray: The convolved images with shape (m, h, w).
+        numpy.ndarray: Array containing the convolved images with shape
+        (m, h, w).
     """
     m, h, w = images.shape
     kh, kw = kernel.shape
 
-    pad_h = kh // 2
-    pad_w = kw // 2
-
     if kh % 2 == 0:
-        pad_top = pad_h
-        pad_bottom = pad_h - 1
+        pad_top = kh // 2
+        pad_bottom = (kh // 2) - 1
     else:
-        pad_top = pad_bottom = pad_h
+        pad_top = kh // 2
+        pad_bottom = kh // 2
 
     if kw % 2 == 0:
-        pad_left = pad_w
-        pad_right = pad_w - 1
+        pad_left = kw // 2
+        pad_right = (kw // 2) - 1
     else:
-        pad_left = pad_right = pad_w
+        pad_left = kw // 2
+        pad_right = kw // 2
 
     padded = np.pad(
         images,
-        (
-            (0, 0),
-            (pad_top, pad_bottom),
-            (pad_left, pad_right)
-        ),
+        ((0, 0), (pad_top, pad_bottom), (pad_left, pad_right)),
         mode='constant'
     )
 
